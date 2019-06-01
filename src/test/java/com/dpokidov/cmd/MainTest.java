@@ -24,9 +24,14 @@ public class MainTest {
         Main.main(new String[]{notAFolderPath});
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void main_ErrorWhenDirDoesnotExist() {
+        String notAFolderPath = Paths.get("./src/test/resources/com/dpokidov/cmd/where-is-it").toAbsolutePath().toString();
+        Main.main(new String[]{notAFolderPath});
+    }
+
     @Test
     public void main_Ok() {
-        System.err.printf("Current path %s\n", Paths.get(".").toAbsolutePath().toString());
         String notAFolderPath = Paths.get("./src/test/resources/com/dpokidov/cmd/dir").toAbsolutePath().toString();
         Main.main(new String[]{notAFolderPath});
     }

@@ -9,7 +9,6 @@ class Main {
     }
 
     public static void main(String[]args){
-        System.out.println("It works!");
         if (args.length == 0) {
             printUsage();
             throw new IllegalArgumentException("no input folder defined");
@@ -21,9 +20,14 @@ class Main {
         }
 
         String dir = args[0];
+        if (!Files.exists(Paths.get(dir))) {
+            printUsage();
+            throw new IllegalArgumentException("directory " + dir + " does not exist");
+        }
+
         if (!Files.isDirectory(Paths.get(dir))) {
             printUsage();
-            throw new IllegalArgumentException("expected directory");
+            throw new IllegalArgumentException("expected directory, but got regular file");
         }
     }
 }
