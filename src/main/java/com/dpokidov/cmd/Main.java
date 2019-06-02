@@ -5,6 +5,7 @@ import com.dpokidov.FileInfo;
 import com.dpokidov.Loader;
 import com.dpokidov.Reducer;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,7 +31,7 @@ class Main {
         this.action = action;
     }
 
-    public void run(String uri) {
+    public void run(String uri) throws IOException {
         this.loader.withFiles(uri, file -> {
             this.reducer.add(file);
 
@@ -55,17 +56,6 @@ class Main {
         if (args.length > 1) {
             printUsage();
             throw new IllegalArgumentException("only one parameter allowed");
-        }
-
-        String dir = args[0];
-        if (!Files.exists(Paths.get(dir))) {
-            printUsage();
-            throw new IllegalArgumentException("directory " + dir + " does not exist");
-        }
-
-        if (!Files.isDirectory(Paths.get(dir))) {
-            printUsage();
-            throw new IllegalArgumentException("expected directory, but got regular file");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.dpokidov;
 
+import java.io.IOException;
 import java.util.function.Function;
 
 /**
@@ -12,6 +13,7 @@ public interface Loader {
      * and not on folders. </b>
      * @param uri location from where load files from
      * @param callback callback to call on each entry
+     * @throws IOException any I/O errors
      */
-    void withFiles(String uri, Function<FileInfo, Void> callback);
+    void withFiles(String uri, Function<FileInfo, Void> callback) throws IOException;
 }

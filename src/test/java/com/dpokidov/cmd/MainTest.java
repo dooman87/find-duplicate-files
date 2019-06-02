@@ -33,7 +33,7 @@ public class MainTest {
     Action action;
 
     @Before
-    public void setup() {
+    public void setup() throws Exception {
         doAnswer(invocation -> {
             invocation.getArgument(1, Function.class).apply(
                 new FileInfo("./src/test/resources/com/dpokidov/cmd/dir/1.txt", "123".getBytes())
@@ -73,14 +73,14 @@ public class MainTest {
     }
 
     @Test
-    public void run_ShouldLoadFiles() {
+    public void run_ShouldLoadFiles() throws Exception {
         main.run("./src/test/resources/com/dpokidov/cmd/dir");
 
         verify(loader).withFiles(eq("./src/test/resources/com/dpokidov/cmd/dir"), any());
     }
 
     @Test
-    public void run_shouldReduceFiles() {
+    public void run_shouldReduceFiles() throws Exception {
         main.run("./src/test/resources/com/dpokidov/cmd/dir");
 
         verify(reducer).add(new FileInfo("./src/test/resources/com/dpokidov/cmd/dir/1.txt", "123".getBytes()));
@@ -88,7 +88,7 @@ public class MainTest {
     }
 
     @Test
-    public void run_shouldCallAction() {
+    public void run_shouldCallAction() throws Exception {
         main.run("./src/test/resources/com/dpokidov/cmd/dir");
 
         verify(action).withDuplicates(Arrays.asList("./src/test/resources/com/dpokidov/cmd/dir/1.txt", "./src/test/resources/com/dpokidov/cmd/dir/2.txt"));
@@ -102,18 +102,6 @@ public class MainTest {
     @Test(expected = IllegalArgumentException.class)
     public void main_ErrorWhenMoreThanOneArgument() {
         Main.main(new String[]{"one", "two"});
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void main_ErrorWhenPassedNotAFolder() {
-        String notADirPath = Paths.get("./src/test/resources/com/dpokidov/cmd/not-a-dir").toAbsolutePath().toString();
-        Main.main(new String[]{notADirPath});
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void main_ErrorWhenDirDoesnotExist() {
-        String doesntExistDir = Paths.get("./src/test/resources/com/dpokidov/cmd/where-is-it").toAbsolutePath().toString();
-        Main.main(new String[]{doesntExistDir});
     }
 
     @Test
