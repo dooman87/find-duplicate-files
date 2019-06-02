@@ -1,18 +1,15 @@
 package com.dpokidov.cmd;
 
-import com.dpokidov.Action;
-import com.dpokidov.FileInfo;
-import com.dpokidov.Loader;
-import com.dpokidov.Reducer;
+import com.dpokidov.action.Action;
+import com.dpokidov.model.FileInfo;
+import com.dpokidov.loader.Loader;
+import com.dpokidov.reducer.Reducer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.function.Function;
@@ -44,7 +41,7 @@ public class MainTest {
             return null;
         }).when(loader).withFiles(eq("./src/test/resources/com/dpokidov/cmd/dir"), any());
 
-        when(reducer.getDuplicates()).thenReturn(
+        when(reducer.getResult()).thenReturn(
             Arrays.asList(
                 Arrays.asList(
                     "./src/test/resources/com/dpokidov/cmd/dir/1.txt",

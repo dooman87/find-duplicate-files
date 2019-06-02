@@ -1,5 +1,8 @@
-package com.dpokidov;
+package com.dpokidov.reducer;
 
+import com.dpokidov.model.FileInfo;
+
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,8 +17,8 @@ public interface Reducer {
     void add(FileInfo fileInfo);
 
     /**
-     * getDuplicates returns all set of files with the same content.
+     * getResult returns all set of files with the same content.
      * @return List of absolute file paths with the same content.
      */
-    List<List<String>> getDuplicates();
+    Collection<List<String>> getResult();
 }

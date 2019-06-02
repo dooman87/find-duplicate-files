@@ -1,10 +1,15 @@
-package com.dpokidov;
+package com.dpokidov.loader;
+
+import com.dpokidov.model.FileInfo;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.function.Function;
 
+/**
+ * Loads files from the local filesystem.
+ */
 public class LocalFileLoader implements Loader {
     @Override
     public void withFiles(String uri, Function<FileInfo, Void> callback) throws IOException {
@@ -35,5 +40,10 @@ public class LocalFileLoader implements Loader {
                 return FileVisitResult.CONTINUE;
             }
         });
+    }
+
+    @Override
+    public FileInfo loadFile(String uri) throws IOException {
+        return null;
     }
 }

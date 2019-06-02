@@ -1,4 +1,4 @@
-package com.dpokidov;
+package com.dpokidov.action;
 
 import java.util.List;
 

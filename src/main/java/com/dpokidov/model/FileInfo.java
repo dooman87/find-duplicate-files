@@ -1,4 +1,4 @@
-package com.dpokidov;
+package com.dpokidov.model;
 
 import java.util.Arrays;
 import java.util.Objects;

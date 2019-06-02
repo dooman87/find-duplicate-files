@@ -1,14 +1,10 @@
 package com.dpokidov.cmd;
 
-import com.dpokidov.Action;
-import com.dpokidov.FileInfo;
-import com.dpokidov.Loader;
-import com.dpokidov.Reducer;
+import com.dpokidov.action.Action;
+import com.dpokidov.loader.Loader;
+import com.dpokidov.reducer.Reducer;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 class Main {
     private Loader loader;
@@ -38,7 +34,7 @@ class Main {
             return null;
         });
 
-        this.reducer.getDuplicates().forEach(duplicates -> {
+        this.reducer.getResult().forEach(duplicates -> {
             this.action.withDuplicates(duplicates);
         });
     }

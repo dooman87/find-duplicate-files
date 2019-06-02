@@ -1,5 +1,6 @@
-package com.dpokidov;
+package com.dpokidov.loader;
 
+import com.dpokidov.model.FileInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
