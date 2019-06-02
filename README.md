@@ -5,15 +5,23 @@ and will output relative paths of duplicates.
 
 ## Usage
 
+You need to install Java 8+ on your computer.
+
 Usage:
 `find-duplicate-files [DIR]`
 
-## Building
+## Releasing
 
 Build the application
 
-`$ bazel build :funddups`
+`$ gradle distZip`
 
-Test the application:
+A ready to go artifact will be generated in `build/distributions/find-duplicate-files.zip`
 
-`$ bazel test :tests`
+## Deving
+
+The application is using [gradle](gradle.org) as build system.
+
+Run unit tests:
+
+`$ gradle test`
