@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.function.Function;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class LocalFileLoaderTest {
@@ -52,9 +53,11 @@ public class LocalFileLoaderTest {
         ArgumentCaptor<FileInfo> argument = ArgumentCaptor.forClass(FileInfo.class);
         verify(callbackMock, times(3)).apply(argument.capture());
 
-        assertTrue(argument.getAllValues().contains(new FileInfo("1.txt", "123".getBytes())));
-        assertTrue(argument.getAllValues().contains(new FileInfo("subdir" + File.separator + "1-dup.txt", "123".getBytes())));
-        assertTrue(argument.getAllValues().contains(new FileInfo("subdir" + File.separator + "empty.txt", "".getBytes())));
+        String absolutePath = Paths.get("./src/test/resources/com/dpokidov/dir").toAbsolutePath().toString();
+
+        assertTrue(argument.getAllValues().contains(new FileInfo(absolutePath + File.separator + "1.txt", "123".getBytes())));
+        assertTrue(argument.getAllValues().contains(new FileInfo(absolutePath + File.separator + "subdir" + File.separator + "1-dup.txt", "123".getBytes())));
+        assertTrue(argument.getAllValues().contains(new FileInfo(absolutePath + File.separator + "subdir" + File.separator + "empty.txt", "".getBytes())));
     }
 
     @Test
@@ -63,5 +66,13 @@ public class LocalFileLoaderTest {
         loader.withFiles("  ./src/test/resources/com/dpokidov/dir   ", callbackMock);
 
         verify(callbackMock, times(3)).apply(any());
+    }
+
+    @Test
+    public void loadFile_ShouldLoadFile() throws Exception {
+        FileInfo fileInfo = loader.loadFile("./src/test/resources/com/dpokidov/dir/1.txt");
+
+        assertEquals("./src/test/resources/com/dpokidov/dir/1.txt", fileInfo.getPath());
+        assertArrayEquals("123".getBytes(), fileInfo.getContent());
     }
 }

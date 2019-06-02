@@ -1,12 +1,16 @@
 package com.dpokidov.cmd;
 
 import com.dpokidov.action.Action;
+import com.dpokidov.action.PrintAction;
 import com.dpokidov.loader.Loader;
+import com.dpokidov.loader.LocalFileLoader;
+import com.dpokidov.reducer.DuplicateReducer;
 import com.dpokidov.reducer.Reducer;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
-class Main {
+public class Main {
     private Loader loader;
     private Reducer reducer;
     private Action action;
@@ -40,7 +44,7 @@ class Main {
     }
 
     private static void printUsage() {
-        System.out.println("Usage: finddups <DIR>");
+        System.out.println("Usage: find-duplicate-files <DIR>");
     }
 
     public static void main(String[]args){
@@ -52,6 +56,17 @@ class Main {
         if (args.length > 1) {
             printUsage();
             throw new IllegalArgumentException("only one parameter allowed");
+        }
+
+        Loader loader = new LocalFileLoader();
+
+        Main main = new Main(loader, new DuplicateReducer(loader), new PrintAction(Paths.get(args[0]).toAbsolutePath().toString()));
+        try {
+            main.run(args[0]);
+        } catch (IOException e) {
+            System.err.printf("Something went wrong: %s\n", e.getMessage());
+            e.printStackTrace(System.err);
+            System.exit(1);
         }
     }
 

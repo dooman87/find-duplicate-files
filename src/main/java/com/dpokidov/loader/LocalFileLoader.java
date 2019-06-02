@@ -35,7 +35,7 @@ public class LocalFileLoader implements Loader {
         Files.walkFileTree(inputDir, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                callback.apply(new FileInfo(inputDir.relativize(file).toString(), Files.readAllBytes(file)));
+                callback.apply(new FileInfo(file.toAbsolutePath().toString(), Files.readAllBytes(file)));
 
                 return FileVisitResult.CONTINUE;
             }
@@ -44,6 +44,6 @@ public class LocalFileLoader implements Loader {
 
     @Override
     public FileInfo loadFile(String uri) throws IOException {
-        return null;
+        return new FileInfo(uri, Files.readAllBytes(Paths.get(uri)));
     }
 }

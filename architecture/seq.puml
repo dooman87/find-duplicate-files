@@ -1,0 +1,19 @@
+@startuml
+User -> Main: Runs the application
+Main -> Main: Validate args
+Main -> Loader: withFiles(dir)
+Loader -> Loader: validates dir
+loop for each file
+  Loader -> Main: file
+  Main -> Reducer: add(file) - stores files by size
+end loop
+Main -> Reducer: getResults()
+loop for each group of file with the the same size
+Reducer -> Loader: loadFile()
+Loader -> Reducer: loaded file
+Reducer -> Reducer: if content the same then add to duplicates
+end loop
+Reducer -> Main: duplicates
+Main -> Action: withDuplicates(duplicates)
+Action -> User: Prints files to stdout
+@enduml
